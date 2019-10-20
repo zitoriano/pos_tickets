@@ -154,7 +154,7 @@ int main()
     strcpy(shows[0].hour, "17h");
 
     strcpy(shows[1].name, "Aladdin");
-    shows[1].capacity = 0;
+    shows[1].capacity = MAX_CAPACITY;
     strcpy(shows[1].hour, "19h");
 
     strcpy(shows[2].name, "Rei Leão");
@@ -219,13 +219,13 @@ int main()
                     break;
                 }
             case 3:
-                printf("Saldo de Caixa");
+                printf("Saldo de Caixa\n");
                 break;
             case 4:
-                printf("Fechar Programa");
+                printf("Fechar Programa\n");
                 break;
             default:
-                printf("Opção Inválida");
+                printf("Opção Inválida, tente novamente\n");
         }
 
     } while (cmd != 4);
@@ -356,6 +356,8 @@ void sellticket()
 
                         break;
                     }
+                    case 3:
+                        // missing code
                     default:
                         printf("Opção inválida\n");
                 }
@@ -369,9 +371,6 @@ void sellticket()
                             index = x;
                             break;
                         }
-
-                    printf("%d\n", seat);
-                    printf("Index %d\n", index);
 
                     // get show date
                     char date[16];
@@ -451,8 +450,6 @@ void showtime(char hour[], char *date)
         tm.tm_mon + 1, 
         tm.tm_year + 1900,
         hour);
-
-    flush();
 }
 
 int ask(char *question)
@@ -466,7 +463,6 @@ int ask(char *question)
 
         if(ans == 's' || ans == 'n')
         {
-            printf("Respostas %d\n", (ans == 's'));
             return (ans == 's');
         }
         else
