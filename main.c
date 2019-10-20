@@ -134,6 +134,9 @@ void flush();
 // sell ticket
 void sellticket();
 
+// cancel ticket
+int cancelticket(int show, int seat);
+
 // check seat
 int checkseat(int show, int seat);
 
@@ -197,8 +200,24 @@ int main()
                 sellticket();
                 break;
             case 2:
-                printf("Cancelar Ingresso");
-                break;
+                {
+                    int show, seat = 0;
+                    printf("Informe o número da peça e acento para cancelar um ingresso\n");
+                    printf("Número da peça: ");
+                    scanf("%d", &show);
+                    printf("Número do acento: ");
+                    scanf("%d", &seat);
+                    flush();
+
+                    if (cancelticket(show, seat))
+                        printf("\nIngresso cancelado.\n");
+                    else
+                        printf("\nIngresso não encontrado.\n");
+
+                    pause();
+                    system("clear");
+                    break;
+                }
             case 3:
                 printf("Saldo de Caixa");
                 break;
@@ -371,11 +390,32 @@ void sellticket()
                 }
 
                 pause();
+                system("clear");
+                break;
             }
         }
     }
+}
 
-    pause();
+int cancelticket(int show, int seat)
+{
+    int i, found = 0;
+    for (i = 0; i < TICKET_LIMIT; i++)
+    {
+        if (tickets[i].show == show && tickets[i].chair == seat)
+        {
+            found = 1;
+            tickets[i].show = 0;
+            tickets[i].type = 0;
+            tickets[i].chair = 0;
+            break;
+        }
+    }
+
+    if(found)
+        return 1;
+    else
+        return 0;
 }
 
 int checkseat(int show, int seat)
