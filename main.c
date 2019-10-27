@@ -237,7 +237,7 @@ int main()
                 pause();
                 system("clear");
                 break;
-                
+
             case 4:
                 printf("Fechar Programa\n");
                 break;
@@ -440,11 +440,15 @@ void sellticket()
                     tickets[index].type = ticket-1;
                     tickets[index].chair = seat;
 
-                    printf("Ingresso vendido\n%d, %s, %d, %d\n", 
-                        tickets[index].show,
-                        tickets[index].date,
-                        tickets[index].type,
-                        tickets[index].chair);
+                    system("clear");
+
+                    // Print ticket details
+                    printf("Seu recibo\n");
+                    printf("==========\n");
+                    printf("Peça: %s\n", shows[cmd-1].name);
+                    printf("Data / Hora: %sh\n", tickets[index].date);
+                    printf("Poltrona: %d\n", seat);
+                    printf("Ingresso: %s\n\n", tickettypes[ticket-1].name);
                 }
 
                 pause();
