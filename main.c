@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define MAX_CAPACITY 20
-#define TICKET_LIMIT 60
+#define MAX_CAPACITY 10
+#define TICKET_LIMIT 30
 
 struct show {
     char name[16];
@@ -83,7 +83,7 @@ int main()
     do
     {
         // print program options
-        printf("# Ingresso Fácil 1.0#\n");
+        printf("# Ingresso Fácil 1.0#\n\n");
         printf("1. Vender Ingresso\n");
         printf("2. Cancelar Ingresso\n");
         printf("3. Saldo de Caixa\n");
@@ -109,7 +109,7 @@ int main()
             case 2:
                 {
                     int show = 0, seat = 0;
-                    printf("Informe o número da peça e acento para cancelar um ingresso\n");
+                    printf("Informe o número da peça e acento para cancelar um ingresso\n\n");
                     printf("Número da peça: ");
                     scanf("%d", &show);
                     printf("Número do acento: ");
@@ -200,11 +200,12 @@ void sellticket()
             if (shows[cmd-1].capacity == 0) {
                 puts("Não existem mais vagas disponíveis para esse show!");
                 pause();
-                continue;
+                system("clear");
+                break;
             }
 
             puts("Poltronas disponíveis\n");
-            for (x = 1; x <= 20; x++)
+            for (x = 1; x <= MAX_CAPACITY; x++)
             {
                 if(checkseat(cmd, x))
                     printf("X, ");
@@ -217,22 +218,24 @@ void sellticket()
             scanf("%d", &seat);
             flush();
             
-            if (seat < 1 || seat > 20)
+            if (seat < 1 || seat > MAX_CAPACITY)
             {
                 puts("Número de poltrona não existe!");
                 pause();
-                continue;
+                system("clear");
+                break;
             }
             else if (checkseat(cmd, seat))
             {
                 puts("Poltrona não está disponível!");
                 pause();
-                continue;
+                system("clear");
+                break;
             }
             else
             {
                 system("clear");
-                puts("Selecione um tipo de ingresso");
+                puts("Selecione um tipo de ingresso\n");
                 
                 for (x = 0; x < 3; x++)
                 {
@@ -351,11 +354,14 @@ void sellticket()
                     tickets[index].type = ticket-1;
                     tickets[index].chair = seat;
 
+                    // Decrease available chairs
+                    shows[cmd-1].capacity = shows[cmd-1].capacity - 1;
+
                     system("clear");
 
                     // Print ticket details
                     printf("Seu recibo\n");
-                    printf("==========\n");
+                    printf("==========\n\n");
                     printf("Peça: %s\n", shows[cmd-1].name);
                     printf("Data / Hora: %sh\n", tickets[index].date);
                     printf("Poltrona: %d\n", seat);
@@ -381,6 +387,10 @@ int cancelticket(int show, int seat)
             tickets[i].show = 0;
             tickets[i].type = 0;
             tickets[i].chair = 0;
+
+            // increase available chairs
+            shows[show-1].capacity = shows[show-1].capacity + 1;
+
             break;
         }
     }
