@@ -357,7 +357,49 @@ void sellticket()
                         break;
                     }
                     case 3:
-                        // missing code
+                        {
+                            int weekday = 0;
+
+                            do {
+                                system("clear");
+
+                                // Show instructions
+                                printf("Informe o dia da semana: \n\n");
+                                printf("1. Segunda-Feira\n");
+                                printf("2. Terça-Feira\n");
+                                printf("3. Quarta-Feira\n");
+                                printf("4. Quinta-Feira\n");
+                                printf("5. Sexta-Feira\n");
+                                printf("6. Sábado\n");
+                                printf("7. Domingo\n");
+
+                                scanf("%d", &weekday);
+                                flush();
+
+                                if (weekday < 1 or weekday > 7) {
+                                    printf("Opção Inválida\n");
+                                    pause();
+                                }
+
+                            } while(weekday < 1 or weekday > 7);
+
+                            if (weekday == 2) {
+                                char question[100];
+
+                                // ask if client is needy-child
+                                strcpy(question, "É criança carente, 's' ou 'n'?");
+                                if (ask(question)) {
+                                    sold = 1;
+                                    break;
+                                } else {
+                                    puts("Cortesias só podem ser vendidas a crianças carentes!");
+                                }
+                            } else {
+                                puts("Cortesias só podem ser vendidas nas terças-feiras!");
+                            }
+                        }
+
+                        break;
                     default:
                         printf("Opção inválida\n");
                 }
