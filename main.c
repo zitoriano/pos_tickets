@@ -1,99 +1,3 @@
-/*
-    - PIM IV
-    - Construir um programa para venda de ingressos de teatro.
-
-    - O programa precisa ter uma tabela de preços
-        1. Preço cheio R$ 100
-        2. Preço meia entrada R$ 50 (Estudantes, Crianças de 0 a 12,
-        adultos a partir de 60 anos e professores da rede pública).
-        3. Desconto de 100% R$ 0 para crianças carentes da rede
-        pública de ensino as terças-feiras.
-
-    - Ao emitir um ingresso vendido, o sistema deve apresentar:
-        1. Data / Hora
-        2. Nome da peça
-        3. Nr da poltrona (Não pode repetir a poltrona 
-        para a mesma peça no mesmo horario)
-
-    - Limitar em 10 poltronas disponíveis, não permitindo vender mais 
-    ingressos quando o limite for atingido.
-
-    - Apresentar o saldo de caixa (Bilheteria)
-        1. Mostrar quantos ingressos foram vendidos por tipo e por peça
-        2. Saldo total no caixa do dia
-
-    ---
-
-    - Fluxo
-
-    1. Mostrar um cabeçalho do programa junto com as opções disponíveis
-        # Ingresso Fácil 1.0 #
-        1. Vender Ingressos
-        2. Cancelar Ingressos
-        3. Saldo de Caixa
-        4. Fechar Programa
-    2. Vender Ingressos
-        1. Vender ingressos para a peça:
-            1. Madame Tussauds
-            2. Aladdin
-            3. Rei Leão
-        2. Ao escolher verificar poltronas vagas.
-            1. Se não houver poltronas disponíveis, printa "Sold Out"
-        3. Digitar poltrona:
-            1. Se poltrona já estiver ocupada printa mensagem, poltrona não disponível.
-        3. Tipo de ingresso:
-            1. Inteira R$ 100,00
-            2. Meia R$ 50,00
-                1. É professor da rede pública (Sim / Não)
-                2. Sim, ok vende o Ingresso
-                3. Não, pergunta se é estudante (Sim / Não)
-                4. Sim, ok vende o Ingresso
-                5. Não, pergunta a idade do cliente:
-                (se idade >= 0 e <= 12 ou >= 60) ok, vende ingresso
-                6. Se não, apresenta mensagem "Não pode vender esse ingresso"
-            3. Cortesia R$ 0,00
-                1. Informe o dia da semana:
-                    1. Domingo
-                    2. Segunda
-                    3. Terça
-                    4. Quarta
-                    5. Quinta
-                    6. Sexta
-                    7. Sábado
-                2. Se for terça (3) pergunta se o cliente é criança carente:
-                    1. Sim, ok vende ingresso.
-                3. Se não, printa "Não pode vender esse ingresso"
-        4. Ingresso vendido, printa na tela
-            # Seu recibo #
-            # Peça: Rei Leão
-            # Data / Hora: 10/10/2019 20h
-            # Poltrona: 10
-            # Ingresso: Inteira
-        5. Cancelar Ingresso
-            1. Escolha o nome da peça e o numero da poltrona.
-            2. Validar as informações se ingresso encontrado, cancela,
-            senão printa "Ingresso não encontrado".
-        6. Saldo de Caixa
-            # Saldo de Caixa #
-            # 
-            # Peça: Madame Tussauds / 17h
-            # Total de ingressos vendidos: 10
-            # Inteira: 7 / Meia: 2 / Cortesia: 1
-            # Valor total recebido: R$ 250
-            # 
-            # Peça: Aladdin / 18h
-            # Total de ingressos vendidos: 10
-            # Inteira: 5 / Meia: 5 / Cortesia: 0
-            # Valor total recebido: R$ 220
-            # 
-            # Peça: Rei Leão / 19h
-            # Total de ingressos vendidos: 10
-            # Inteira: 9 / Meia: 1 / Cortesia: 0
-            # Valor total recebido: R$ 300
-            #
-            # Saldo total em caixa: R$ 780,00
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -147,7 +51,7 @@ void showtime(char hour[], char *date);
 int ask(char *question);
 
 // sales by day
-void sales_by_day(int show);
+float sales_by_day(int show);
 
 int main()
 {
@@ -222,21 +126,28 @@ int main()
                     break;
                 }
             case 3: 
-                printf("Saldo de Caixa\n\n");
+                {
+                    printf("Saldo de Caixa\n\n");
 
-                // Print details from show 1
-                sales_by_day(0);
+                    float total = 0;
 
-                // Print details from show 2
-                sales_by_day(1);
+                    // Print details from show 1
+                    total = total + sales_by_day(0);
 
-                // Print details from show 3
-                sales_by_day(2);
+                    // Print details from show 2
+                    total = total + sales_by_day(1);
 
-                // Pause program after print all
-                pause();
-                system("clear");
-                break;
+                    // Print details from show 3
+                    total = total + sales_by_day(2);
+
+                    // Print total
+                    printf("Total de caixa do dia: R$ %1.5f\n\n", total);
+
+                    // Pause program after print all
+                    pause();
+                    system("clear");
+                    break;
+                }
 
             case 4:
                 printf("Fechar Programa\n");
@@ -515,7 +426,7 @@ void showtime(char hour[], char *date)
         hour);
 }
 
-void sales_by_day(int show)
+float sales_by_day(int show)
 {
     float total = 0;
     int ticketid = 0, total_tickets = 0, regular = 0, promotional = 0, free = 0;
@@ -554,6 +465,8 @@ void sales_by_day(int show)
         free);
 
     printf("Valor total recebido: R$ %1.5f\n\n", total);
+
+    return total;
 }
 
 int ask(char *question)
