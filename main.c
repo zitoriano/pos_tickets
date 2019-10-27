@@ -146,6 +146,9 @@ void showtime(char hour[], char *date);
 // ask (y or n)
 int ask(char *question);
 
+// sales by day
+void sales_by_day(int show);
+
 int main()
 {
     // define shows
@@ -201,7 +204,7 @@ int main()
                 break;
             case 2:
                 {
-                    int show, seat = 0;
+                    int show = 0, seat = 0;
                     printf("Informe o número da peça e acento para cancelar um ingresso\n");
                     printf("Número da peça: ");
                     scanf("%d", &show);
@@ -218,9 +221,23 @@ int main()
                     system("clear");
                     break;
                 }
-            case 3:
-                printf("Saldo de Caixa\n");
+            case 3: 
+                printf("Saldo de Caixa\n\n");
+
+                // Print details from show 1
+                sales_by_day(0);
+
+                // Print details from show 2
+                sales_by_day(1);
+
+                // Print details from show 3
+                sales_by_day(2);
+
+                // Pause program after print all
+                pause();
+                system("clear");
                 break;
+                
             case 4:
                 printf("Fechar Programa\n");
                 break;
@@ -492,6 +509,47 @@ void showtime(char hour[], char *date)
         tm.tm_mon + 1, 
         tm.tm_year + 1900,
         hour);
+}
+
+void sales_by_day(int show)
+{
+    float total = 0;
+    int ticketid = 0, total_tickets = 0, regular = 0, promotional = 0, free = 0;
+
+    for (int x = 0; x < TICKET_LIMIT; x++)
+    {
+        if (tickets[x].show == show + 1 && tickets[x].chair > 0)
+        {
+            ticketid = tickets[x].type;
+
+            total_tickets = total_tickets + 1;
+            total = total + tickettypes[ticketid].price;
+
+            switch (ticketid)
+            {
+                case 0:
+                    regular = regular + 1; break;
+                case 1:
+                    promotional = promotional + 1; break;
+                case 2:
+                    free = free + 1; break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    printf("Peça: %s / %s\n", shows[show].name, shows[show].hour);
+    printf("Total de ingressos vendidos: %d\n", total_tickets);
+    printf("%s: %d / %s: %d / %s: %d\n", 
+        tickettypes[0].name,
+        regular,
+        tickettypes[1].name,
+        promotional,
+        tickettypes[2].name,
+        free);
+
+    printf("Valor total recebido: R$ %1.5f\n\n", total);
 }
 
 int ask(char *question)
