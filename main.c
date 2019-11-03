@@ -54,7 +54,7 @@ int ask(char *question);
 float sales_by_day(int show);
 
 int main()
-{
+{	
     // define shows
     strcpy(shows[0].name, "Madame Tussauds");
     shows[0].capacity = MAX_CAPACITY;
@@ -64,7 +64,7 @@ int main()
     shows[1].capacity = MAX_CAPACITY;
     strcpy(shows[1].hour, "19h");
 
-    strcpy(shows[2].name, "Rei Le√£o");
+    strcpy(shows[2].name, "Rei Le„o");
     shows[2].capacity = MAX_CAPACITY;
     strcpy(shows[2].hour, "22h");
 
@@ -83,14 +83,14 @@ int main()
     do
     {
         // print program options
-        printf("# Ingresso F√°cil 1.0#\n\n");
+        printf("# Ingresso F·cil 1.0#\n\n");
         printf("1. Vender Ingresso\n");
         printf("2. Cancelar Ingresso\n");
         printf("3. Saldo de Caixa\n");
         printf("4. Fechar Programa\n\n");
 
         // print instructions
-        printf("Digite a op√ß√£o desejada: \n");
+        printf("Digite a opÁ„o desejada: \n");
 
         // get option
         scanf("%d", &cmd);
@@ -99,7 +99,7 @@ int main()
         flush();
 
         // clear window options
-        system("clear");
+        system("cls");
 
         switch (cmd)
         {
@@ -109,20 +109,20 @@ int main()
             case 2:
                 {
                     int show = 0, seat = 0;
-                    printf("Informe o n√∫mero da pe√ßa e acento para cancelar um ingresso\n\n");
-                    printf("N√∫mero da pe√ßa: ");
+                    printf("Informe o n˙mero da peÁa e acento para cancelar um ingresso\n\n");
+                    printf("N˙mero da peÁa: ");
                     scanf("%d", &show);
-                    printf("N√∫mero do acento: ");
+                    printf("N˙mero do acento: ");
                     scanf("%d", &seat);
                     flush();
 
                     if (cancelticket(show, seat))
                         printf("\nIngresso cancelado.\n");
                     else
-                        printf("\nIngresso n√£o encontrado.\n");
+                        printf("\nIngresso n„o encontrado.\n");
 
                     pause();
-                    system("clear");
+                    system("cls");
                     break;
                 }
             case 3: 
@@ -145,7 +145,7 @@ int main()
 
                     // Pause program after print all
                     pause();
-                    system("clear");
+                    system("cls");
                     break;
                 }
 
@@ -153,7 +153,7 @@ int main()
                 printf("Fechar Programa\n");
                 break;
             default:
-                printf("Op√ß√£o Inv√°lida, tente novamente\n");
+                printf("OpÁ„o Inv·lida, tente novamente\n");
         }
 
     } while (cmd != 4);
@@ -177,7 +177,7 @@ void sellticket()
 {
     while(1)
     {
-        system("clear");
+        system("cls");
 
         puts("Escolha um show:\n");
 
@@ -189,22 +189,22 @@ void sellticket()
         flush();
 
         if (cmd < 1 || cmd > 3) {
-            puts("Show n√£o encontrado, tente novamente!");
+            puts("Show n„o encontrado, tente novamente!");
             pause();
         }
         else
         {
-            system("clear");
+            system("cls");
             printf("Show selecionado: %s\n", shows[cmd-1].name);
 
             if (shows[cmd-1].capacity == 0) {
-                puts("N√£o existem mais vagas dispon√≠veis para esse show!");
+                puts("N„o existem mais vagas disponÌveis para esse show!");
                 pause();
-                system("clear");
+                system("cls");
                 break;
             }
 
-            puts("Poltronas dispon√≠veis\n");
+            puts("Poltronas disponÌveis\n");
             for (x = 1; x <= MAX_CAPACITY; x++)
             {
                 if(checkseat(cmd, x))
@@ -218,23 +218,27 @@ void sellticket()
             scanf("%d", &seat);
             flush();
             
+            int sold = 0;
+            int weekday = 0;
+            int ticket = 0;
+            
             if (seat < 1 || seat > MAX_CAPACITY)
             {
-                puts("N√∫mero de poltrona n√£o existe!");
+                puts("N√∫mero de poltrona n„o existe!");
                 pause();
-                system("clear");
+                system("cls");
                 break;
             }
             else if (checkseat(cmd, seat))
             {
-                puts("Poltrona n√£o est√° dispon√≠vel!");
+                puts("Poltrona n„o est· disponÌvel!");
                 pause();
-                system("clear");
+                system("cls");
                 break;
             }
             else
             {
-                system("clear");
+                system("cls");
                 puts("Selecione um tipo de ingresso\n");
                 
                 for (x = 0; x < 3; x++)
@@ -242,13 +246,12 @@ void sellticket()
                     printf("%d. %s\n", x + 1, tickettypes[x].name);
                 }
 
-                int ticket = 0;
                 scanf("%d", &ticket);
                 flush();
-
-                int sold = 0;
+                
                 switch(ticket)
                 {
+                              
                     case 1:
                     {
                         sold = 1;
@@ -259,78 +262,79 @@ void sellticket()
                         char question[100];
 
                         // ask if client is a teacher/professor
-                        strcpy(question, "√â professor da rede p√∫blica, 's' ou 'n'?");
+                        strcpy(question, "… professor da rede p˙blica, 's' ou 'n'?");
                         if (ask(question)) {
                             sold = 1;
                             break;
                         }
 
                         // clear
-                        system("clear");
+                        system("cls");
 
                         // ask if client is a student
-                        strcpy(question, "√â estudante, 's' ou 'n'?");
+                        strcpy(question, "… estudante, 's' ou 'n'?");
                         if (ask(question)) {
                             sold = 1;
                             break;
                         }
 
                         // clear
-                        system("clear");
+                        system("cls");
 
                         // ask client your age
-                        strcpy(question, "Voc√™ tem entre 0 as 12 anos ou mais de 60, 's' ou 'n'?");
+                        strcpy(question, "Voce tem entre 0 as 12 anos ou mais de 60, 's' ou 'n'?");
                         if (ask(question)) {
                             sold = 1;
                             break;
                         }
 
-                        break;
+                        
                     }
+                    break;
                     case 3:
-                        {
-                            int weekday = 0;
+                    {
+                        
 
-                            do {
-                                system("clear");
+                        do {
+                            system("cls");
 
-                                // Show instructions
-                                printf("Informe o dia da semana: \n\n");
-                                printf("1. Segunda-Feira\n");
-                                printf("2. Ter√ßa-Feira\n");
-                                printf("3. Quarta-Feira\n");
-                                printf("4. Quinta-Feira\n");
-                                printf("5. Sexta-Feira\n");
-                                printf("6. S√°bado\n");
-                                printf("7. Domingo\n");
+                            // Show instructions
+                            printf("Informe o dia da semana: \n\n");
+                            printf("1. Segunda-Feira\n");
+                            printf("2. TerÁa-Feira\n");
+                            printf("3. Quarta-Feira\n");
+                            printf("4. Quinta-Feira\n");
+                            printf("5. Sexta-Feira\n");
+                            printf("6. S·bado\n");
+                            printf("7. Domingo\n");
 
-                                scanf("%d", &weekday);
-                                flush();
+                            scanf("%d", &weekday);
+                            flush();
 
-                                if (weekday < 1 or weekday > 7) {
-                                    printf("Op√ß√£o Inv√°lida\n");
-                                    pause();
-                                }
-
-                            } while(weekday < 1 or weekday > 7);
-
-                            if (weekday == 2) {
-                                char question[100];
-
-                                // ask if client is needy-child
-                                strcpy(question, "√â crian√ßa carente, 's' ou 'n'?");
-                                if (ask(question)) {
-                                    sold = 1;
-                                    break;
-                                } else {
-                                    puts("Cortesias s√≥ podem ser vendidas a crian√ßas carentes!");
-                                }
-                            } else {
-                                puts("Cortesias s√≥ podem ser vendidas nas ter√ßas-feiras!");
+                            if (weekday < 1 || weekday > 7) {
+                                printf("OpÁ„o Inv·lida\n");
+                                pause();
                             }
-                        }
 
-                        break;
+                        } while(weekday < 1 || weekday > 7);
+
+                        if (weekday == 2) {
+                            char question[100];
+
+                            // ask if client is needy-child
+                            strcpy(question, "√â crian√ßa carente, 's' ou 'n'?");
+                            if (ask(question)) {
+                                sold = 1;
+                                break;
+                            } else {
+                                puts("Cortesias s√≥ podem ser vendidas a crian√ßas carentes!");
+                            }
+                        } else {
+                            puts("Cortesias s√≥ podem ser vendidas nas ter√ßas-feiras!");
+                        }
+                        
+                    }
+                    break;
                     default:
                         printf("Op√ß√£o inv√°lida\n");
                 }
@@ -357,7 +361,7 @@ void sellticket()
                     // Decrease available chairs
                     shows[cmd-1].capacity = shows[cmd-1].capacity - 1;
 
-                    system("clear");
+                    system("cls");
 
                     // Print ticket details
                     printf("Seu recibo\n");
@@ -369,7 +373,7 @@ void sellticket()
                 }
 
                 pause();
-                system("clear");
+                system("cls");
                 break;
             }
         }
@@ -439,9 +443,9 @@ void showtime(char hour[], char *date)
 float sales_by_day(int show)
 {
     float total = 0;
-    int ticketid = 0, total_tickets = 0, regular = 0, promotional = 0, free = 0;
+    int x = 0, ticketid = 0, total_tickets = 0, regular = 0, promotional = 0, free = 0;
 
-    for (int x = 0; x < TICKET_LIMIT; x++)
+    for (x = 0; x < TICKET_LIMIT; x++)
     {
         if (tickets[x].show == show + 1 && tickets[x].chair > 0)
         {
