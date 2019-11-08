@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <locale.h>
 #define MAX_CAPACITY 10
 #define TICKET_LIMIT 30
 
@@ -54,7 +55,9 @@ int ask(char *question);
 float sales_by_day(int show);
 
 int main()
-{	
+{
+	setlocale(LC_ALL, "Portuguese");
+	
     // define shows
     strcpy(shows[0].name, "Madame Tussauds");
     shows[0].capacity = MAX_CAPACITY;
@@ -224,7 +227,7 @@ void sellticket()
             
             if (seat < 1 || seat > MAX_CAPACITY)
             {
-                puts("NÃºmero de poltrona não existe!");
+                puts("Número de poltrona não existe!");
                 pause();
                 system("cls");
                 break;
@@ -287,14 +290,10 @@ void sellticket()
                             sold = 1;
                             break;
                         }
-
-                        
                     }
                     break;
                     case 3:
                     {
-                        
-
                         do {
                             system("cls");
 
@@ -322,21 +321,21 @@ void sellticket()
                             char question[100];
 
                             // ask if client is needy-child
-                            strcpy(question, "Ã‰ crianÃ§a carente, 's' ou 'n'?");
+                            strcpy(question, "É criança carente, 's' ou 'n'?");
                             if (ask(question)) {
                                 sold = 1;
                                 break;
                             } else {
-                                puts("Cortesias sÃ³ podem ser vendidas a crianÃ§as carentes!");
+                                puts("Cortesias só podem ser vendidas a crianças carentes!");
                             }
                         } else {
-                            puts("Cortesias sÃ³ podem ser vendidas nas terÃ§as-feiras!");
+                            puts("Cortesias só podem ser vendidas nas terças-feiras!");
                         }
                         
                     }
                     break;
                     default:
-                        printf("OpÃ§Ã£o invÃ¡lida\n");
+                        printf("Opção inválida\n");
                 }
 
                 if(sold)
@@ -366,7 +365,7 @@ void sellticket()
                     // Print ticket details
                     printf("Seu recibo\n");
                     printf("==========\n\n");
-                    printf("PeÃ§a: %s\n", shows[cmd-1].name);
+                    printf("Peça: %s\n", shows[cmd-1].name);
                     printf("Data / Hora: %sh\n", tickets[index].date);
                     printf("Poltrona: %d\n", seat);
                     printf("Ingresso: %s\n\n", tickettypes[ticket-1].name);
@@ -468,7 +467,7 @@ float sales_by_day(int show)
         }
     }
 
-    printf("PeÃ§a: %s / %s\n", shows[show].name, shows[show].hour);
+    printf("Peça: %s / %s\n", shows[show].name, shows[show].hour);
     printf("Total de ingressos vendidos: %d\n", total_tickets);
     printf("%s: %d / %s: %d / %s: %d\n", 
         tickettypes[0].name,
@@ -498,7 +497,7 @@ int ask(char *question)
         }
         else
         {
-            puts("Resposta invÃ¡lida");
+            puts("Resposta inválida");
             pause(); 
             continue;
         }
